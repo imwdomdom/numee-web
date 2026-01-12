@@ -150,7 +150,7 @@
           <div class="header-row">
               <h1>นุมี <span class="pulse-icon">💖</span></h1>
               <button class="mini-music-btn" onclick="toggleMusic()" id="musicBtn">
-                 <span id="musicIcon">🎵</span> <span id="musicText">Play</span>
+                 <span id="musicIcon">🎵</span> <span id="musicText">เปิดเพลง</span>
               </button>
           </div>
       
@@ -209,9 +209,9 @@
                     รู้ว่าเรียนพยาบาลมันเหนื่อย ทั้งขึ้นฝึก ทั้งอ่านหนังสือ 
                     แบไม่รู้ว่าตอนนี้เธอกำลังเผชิญกับเรื่องอะไรอยู่ แต่ขอให้รู้ไว้นะว่าแบภูมิใจในตัวเธอมากๆ 
                     ยิ้มให้กำลังตัวเองเยอะๆ พักผ่อนให้พอ เหนื่อยก็หันมานะ แบอยู่ตรงนี้เสมอ 
-                    เหนื่อยได้ ท้อได้ แต่อย่าลืมดุอาอ์และซุโกรต่ออัลลอฮ์ให้มากนะคนเก่ง
+                    เหนื่อยได้ ท้อได้ แต่อย่าลืมดุอาอ์และซุโกรต่ออัลลอฮ์ให้มากๆนะคะคนเก่ง
                  </p>
-                 <div class="signature">- หวังว่ามุมน้อยๆนี้ เธอจะชอบนะ -</div>
+                 <div class="signature">- หวังว่ามุมเล็กๆนี้ เธอจะชอบนะ -</div>
               </div>
           </div>
 
@@ -281,7 +281,7 @@
       
       if (audio.paused) {
         audio.play().then(() => {
-          icon.innerText = "💿"; icon.classList.add("spin"); text.innerText = "Playing.."; btn.style.borderColor = "#ff8da1"; 
+          icon.innerText = "💿"; icon.classList.add("spin"); text.innerText = "กำลังเล่น.."; btn.style.borderColor = "#ff8da1"; 
         }).catch(e => alert("หาไฟล์เพลงไม่เจอครับ ตรวจสอบชื่อไฟล์ music.mp3 อีกทีนะ!"));
       } else {
         audio.pause(); icon.innerText = "🎵"; icon.classList.remove("spin"); text.innerText = "Play"; btn.style.borderColor = "#ffeef2";
