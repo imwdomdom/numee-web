@@ -31,11 +31,11 @@
                   radial-gradient(1200px 400px at 90% 110%, #fff0f3, transparent);
       border-radius:24px; padding:30px; box-shadow:0 20px 40px rgba(90, 45, 56, 0.08);
       border: 2px solid #ffeef2; 
-      min-height: 600px; /* ความสูงขั้นต่ำ */
+      min-height: 650px; /* เพิ่มความสูงเผื่อไว้สำหรับหน้าเขียน */
       display: flex; flex-direction: column;
     }
     
-    /* Header Fixed ส่วนหัวที่จะอยู่ทุกหน้า */
+    /* Header Fixed */
     .header-section {
         border-bottom: 2px dashed #ffeef2;
         padding-bottom: 20px;
@@ -49,15 +49,13 @@
     
     /* --- Page Logic --- */
     .page-content {
-        display: none; /* ซ่อนทุกหน้าก่อน */
-        animation: fadeIn 0.6s ease-out; /* ใส่ Effect ตอนเปลี่ยนหน้า */
+        display: none; 
+        animation: fadeIn 0.6s ease-out; 
         flex-grow: 1;
         flex-direction: column;
-        justify-content: space-between; /* จัดปุ่มกดให้อยู่ล่างสุดเสมอ */
+        justify-content: space-between; 
     }
-    .page-content.active {
-        display: flex; /* แสดงเฉพาะหน้าที่มี class active */
-    }
+    .page-content.active { display: flex; }
 
     /* Grid Layout */
     .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px}
@@ -85,9 +83,9 @@
     .mini-music-btn{ border: 2px solid #ffeef2; border-radius:50px; padding: 5px 15px; font-size: 0.9rem; font-weight: 600; background: white; color: var(--primary); box-shadow:0 4px 10px rgba(255, 141, 161, 0.1); display: flex; align-items: center; gap: 5px; }
     .mini-music-btn:hover { background: #fff0f5; transform: scale(1.05); }
 
-    /* Nav Buttons (Next/Back) - ปุ่มนำทางด้านล่าง */
+    /* Nav Buttons */
     .nav-buttons {
-        margin-top: 40px; 
+        margin-top: 20px; 
         display: flex;
         justify-content: center;
         gap: 15px;
@@ -112,14 +110,56 @@
     .spin { animation: spin-record 2s linear infinite; display: inline-block; }
     @keyframes spin-record { 100% { transform: rotate(360deg); } }
     
-    /* Closing Note */
-    .closing-note { background-color: #fff; border: 2px dashed #ff8da1; border-radius: 15px; padding: 25px; position: relative; text-align: center; margin-bottom: 20px; margin-top: 20px;}
+    /* Letter Section */
+    .closing-note { background-color: #fff; border: 2px dashed #ff8da1; border-radius: 15px; padding: 25px; position: relative; text-align: center; margin-bottom: 10px; margin-top: 10px;}
     .closing-note::before { content: '💌'; position: absolute; top: -15px; left: 20px; background: #fff0f5; padding: 0 10px; font-size: 1.5rem; }
     .closing-note h3 { color: #d65a73; margin-top: 10px; margin-bottom: 20px; }
     #hiddenContent { display: none; text-align: left; animation: fadeIn 1s ease-in-out; }
     #hiddenContent p { color: #7a4e5a; line-height: 1.8; font-size: 1rem; }
     .signature { text-align: right; margin-top: 15px; font-weight: bold; color: var(--primary); }
     
+    /* --- CSS สำหรับกล่องเขียนข้อความ (เพิ่มใหม่) --- */
+    .write-box {
+        background: #fff;
+        border: 2px solid #ffe6ee;
+        border-radius: 15px;
+        padding: 20px;
+        position: relative;
+        text-align: center;
+    }
+    .write-box textarea {
+        width: 100%;
+        height: 150px;
+        border: 1px solid #ffc4d6;
+        border-radius: 10px;
+        padding: 15px;
+        font-family: 'Mali', cursive;
+        font-size: 1rem;
+        color: #5a2d38;
+        resize: none;
+        outline: none;
+        background: #fffdfd;
+    }
+    .write-box textarea:focus { border-color: #ff8da1; box-shadow: 0 0 8px rgba(255, 141, 161, 0.2); }
+    
+    .write-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+        justify-content: center;
+    }
+    .btn-line { background: #06c755; color: white; border: none; } /* สีเขียวไลน์ */
+    .btn-save { background: #ffd1dc; color: #5a2d38; border: none; }
+
+    #savedNoteArea {
+        display: none;
+        background: #fff9fb;
+        border: 1px dashed #ff8da1;
+        padding: 20px;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
     /* Final Gift */
     .final-gift { padding: 40px 20px; background: linear-gradient(135deg, #fff5f8, #fff); border: 2px solid #ff8da1; border-radius: 20px; text-align: center; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin-top: 20px;}
     .final-gift:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255, 141, 161, 0.2); }
@@ -153,7 +193,6 @@
                  <span id="musicIcon">🎵</span> <span id="musicText">เปิดเพลง</span>
               </button>
           </div>
-      
       </div>
 
       <div id="page1" class="page-content active"> 
@@ -217,20 +256,41 @@
 
           <div class="nav-buttons">
               <button class="nav-btn" onclick="showPage('page1')">👈 กลับ</button>
-              <button class="nav-btn next" onclick="showPage('page3')">ของขวัญสุดท้าย 🎁</button>
+              <button class="nav-btn next" onclick="showPage('page3')">ไปต่อ 👉</button>
           </div>
       </div>
 
       <div id="page3" class="page-content">
+          <h3 style="text-align:center; color:#d65a73;">📝 มีอะไรอยากจะบอกเขาไหม?</h3>
           
-          <div class="final-gift" onclick="triggerHeartRain()">
-              <span class="gift-icon">🎁</span>
-              <h3 id="giftTitle">กล่องพิเศษ</h3>
-              <p id="giftText">             </p>
+          <div class="write-box">
+              <textarea id="userNote" placeholder="พิมพ์ความในใจ หรือระบายความเหนื่อยตรงนี้ได้เลยนะ..."></textarea>
+              
+              <div id="savedNoteArea">
+                  <p id="savedText" style="color:#5a2d38; font-style:italic;"></p>
+              </div>
+
+              <div class="write-actions">
+                  <button class="nav-btn btn-save" onclick="saveNote()">เก็บไว้ในใจ</button>
+              </div>
           </div>
 
           <div class="nav-buttons">
               <button class="nav-btn" onclick="showPage('page2')">👈 กลับ</button>
+              <button class="nav-btn next" onclick="showPage('page4')">ของขวัญสุดท้าย 🎁</button>
+          </div>
+      </div>
+
+      <div id="page4" class="page-content">
+          
+          <div class="final-gift" onclick="triggerHeartRain()">
+              <span class="gift-icon">🎁</span>
+              <h3 id="giftTitle">กล่องพิเศษ</h3>
+              <p id="giftText">กดเพื่อเปิดดู</p>
+          </div>
+
+          <div class="nav-buttons">
+              <button class="nav-btn" onclick="showPage('page3')">👈 กลับ</button>
               <button class="nav-btn" onclick="showPage('page1')">🏠 หน้าแรก</button>
           </div>
       </div>
@@ -239,29 +299,23 @@
   </div>
 
   <script>
-    // --- ฟังก์ชันเปลี่ยนหน้า (Logic หัวใจหลัก) ---
+    // --- Page Switching Logic ---
     function showPage(pageId) {
-        // ซ่อนทุกหน้า
         document.querySelectorAll('.page-content').forEach(page => {
             page.style.display = 'none';
             page.classList.remove('active');
         });
-        
-        // แสดงหน้าที่เลือก
         const targetPage = document.getElementById(pageId);
         targetPage.style.display = 'flex';
-        // ใช้ setTimeout เล็กน้อยเพื่อให้ Animation ทำงาน
-        setTimeout(() => {
-            targetPage.classList.add('active');
-        }, 10);
+        setTimeout(() => { targetPage.classList.add('active'); }, 10);
     }
 
     // --- Message Logic ---
     const messages = [
+      'แหน่ะ! รู้นะว่าเหนื่อย... ส่งหัวใจใหญ่ๆ ไปให้นะคุณพยาบาล 🧸💕',
       'เธอทำได้ดีมากแล้ว วันนี้ขอแค่ผ่านไปอย่างอ่อนโยนกับตัวเองก็พอ 💖',
       'ยิ้มเยอะๆ นะคนเก่ง กำลังใจอยู่ตรงนี้เสมอ 🌷',
       'วันหนึ่งความพยายามทั้งหมด จะกลายเป็นรอยยิ้มที่งดงามของคนไข้ ✨',
-      'แหน่ะ! รู้นะว่าเหนื่อย... ส่งหัวใจใหญ่ๆ ไปให้นะคุณพยาบาล 🧸💕',
     ];
 
     function randomMessage(){
@@ -294,10 +348,53 @@
         document.getElementById('hiddenContent').style.display = 'block';
     }
 
+    // --- Write Note Logic (New) ---
+    function saveNote() {
+        const text = document.getElementById('userNote').value;
+        if(text.trim() === "") { alert("พิมพ์อะไรสักหน่อยสิคะ 😊"); return; }
+        
+        // ซ่อนกล่องพิมพ์ แสดงข้อความแทน
+        document.getElementById('userNote').style.display = 'none';
+        document.getElementById('savedNoteArea').style.display = 'block';
+        document.getElementById('savedText').innerText = `"${text}"`;
+        
+        // บันทึกลงเครื่อง
+        localStorage.setItem('numeeNote', text);
+        alert("บันทึกความในใจเรียบร้อยครับ 💖");
+    }
+
+    function sendToLine() {
+        const text = document.getElementById('userNote').value;
+        if(text.trim() === "") { alert("พิมพ์ก่อนส่งนะ 😊"); return; }
+        
+        // สร้าง Link ส่ง Line (เมื่อกดจะเด้งไปแอพ Line ให้เลือกเพื่อนแล้วกดส่ง)
+        const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent("ถึงแบ... " + text)}`;
+        window.open(lineUrl, '_blank');
+    }
+
+    // ตรวจสอบว่าเคยจดไว้ไหม
+    window.onload = function() {
+        const saved = localStorage.getItem('numeeNote');
+        if(saved) {
+            document.getElementById('userNote').value = saved;
+        }
+    }
+
     // --- Heart Rain Logic ---
     function triggerHeartRain() {
         document.getElementById('giftTitle').innerText = "ท่านหญิงฟาตีมะฮเคยกล่าวไว้ว่า:";
         document.getElementById('giftText').innerText = "ตกหลุมรักใครสักคนเป็นเรื่องธรรมดา แต่ตกหลุมรักหลายๆครั้งกับคนเดิม เป็นเรื่องที่พิเศษมาก ";
+        
+        // เล่นเพลงอัตโนมัติถ้ากดของขวัญ
+        const audio = document.getElementById("bgMusic");
+        if (audio.paused) {
+            audio.play().then(() => {
+                document.getElementById("musicIcon").innerText = "💿"; 
+                document.getElementById("musicIcon").classList.add("spin"); 
+                document.getElementById("musicText").innerText = "กำลังเล่น.."; 
+                document.getElementById("musicBtn").style.borderColor = "#ff8da1"; 
+            });
+        }
 
         const symbols = ['💖', '💕', '💗', '🌷', '✨', '🩺', '💐'];
         const duration = 5000;
