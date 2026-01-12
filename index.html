@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Numee ~</title>
+  <link href="https://fonts.googleapis.com/css2?family=Mali:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      /* --- Palette สี --- */
+      --bg:#fff0f5; 
+      --card:#ffffff; 
+      --primary:#ff8da1; 
+      --accent:#ffc4d6; 
+      --text:#5a2d38; 
+      --shadow-color: rgba(255, 141, 161, 0.4); 
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; 
+      font-family: 'Mali', cursive; 
+      color:var(--text);
+      background: linear-gradient(180deg, var(--bg), #ffe6ee);
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      padding-bottom: 50px;
+    }
+    .container{max-width:960px; padding:24px}
+    .hero{
+      background: radial-gradient(1200px 400px at 10% -10%, #fffbfd, transparent),
+                  radial-gradient(1200px 400px at 90% 110%, #fff0f3, transparent);
+      border-radius:24px; padding:40px; box-shadow:0 20px 40px rgba(90, 45, 56, 0.08);
+      border: 2px solid #ffeef2; 
+    }
+    h1{font-size:2.4rem; margin:0 0 8px; color: #d65a73;}
+    .subtitle{opacity:.85; margin-bottom:24px; font-size: 1.1rem;}
+    .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px}
+    .card{
+      background:var(--card); border-radius:20px; padding:20px; 
+      box-shadow:0 10px 24px rgba(90, 45, 56, 0.06); 
+      transition:transform .2s ease, box-shadow .2s ease;
+      border: 1px solid #fff0f5;
+    }
+    .card:hover{transform:translateY(-4px); box-shadow:0 16px 32px rgba(90, 45, 56, 0.1)}
+    .card h3 { color: var(--primary); margin-top: 0; }
+    .quote{font-size:1.05rem; line-height:1.7}
+    
+    /* จัดปุ่มให้อยู่กึ่งกลางและมีระยะห่าง */
+    .actions{
+        display:flex; 
+        gap:15px; 
+        flex-wrap:wrap; 
+        margin-top:30px; 
+        justify-content: center; /* จัดกึ่งกลาง */
+    }
+
+    /* ปุ่มหลัก (สีชมพู) */
+    button.primary-btn{
+      border:none; border-radius:999px; padding:12px 24px; font-size:1.1rem; cursor:pointer;
+      font-family: 'Mali', cursive; font-weight: 600;
+      background:linear-gradient(135deg, var(--primary), var(--accent)); 
+      color:#fff; 
+      box-shadow:0 10px 20px var(--shadow-color);
+      transition: transform 0.1s;
+    }
+    
+    /* ปุ่มรอง (สีขาว - สำหรับเปิดเพลง) */
+    button.secondary-btn{
+      border: 2px solid #ffeef2; 
+      border-radius:999px; padding:12px 24px; font-size:1.1rem; cursor:pointer;
+      font-family: 'Mali', cursive; font-weight: 600;
+      background: white; 
+      color: var(--primary); 
+      box-shadow:0 5px 15px rgba(255, 141, 161, 0.1);
+      transition: transform 0.1s, background 0.3s;
+      display: flex; align-items: center; gap: 8px; /* จัดไอคอนกับตัวหนังสือ */
+    }
+
+    button:active { transform: scale(0.95); }
+    button.secondary-btn:hover { background: #fff0f5; }
+    
+    .footer{margin-top:28px; opacity:.8; font-size:1.1rem; color: var(--primary); font-weight: bold; min-height: 24px; text-align: center;}
+    .pulse-icon { display: inline-block; animation: pulse-heart 1.5s infinite ease-in-out; }
+    @keyframes pulse-heart{0%,100%{transform:scale(1)} 50%{transform:scale(1.2)}}
+
+    /* Animation แผ่นเสียงหมุน (เมื่อกดเล่นเพลง) */
+    .spin { animation: spin-record 2s linear infinite; display: inline-block; }
+    @keyframes spin-record { 100% { transform: rotate(360deg); } }
+    
+    /* Style สำหรับกล่องจดหมาย */
+    .closing-note {
+        margin-top: 40px;
+        background-color: #fff;
+        border: 2px dashed #ff8da1; 
+        border-radius: 15px;
+        padding: 25px;
+        position: relative;
+        text-align: center;
+    }
+    .closing-note::before {
+        content: '💌'; 
+        position: absolute;
+        top: -15px;
+        left: 20px;
+        background: #fff0f5;
+        padding: 0 10px;
+        font-size: 1.5rem;
+    }
+    .closing-note h3 { color: #d65a73; margin-top: 10px; margin-bottom: 20px; }
+    #hiddenContent { display: none; text-align: left; animation: fadeIn 1s ease-in-out; }
+    #hiddenContent p { color: #7a4e5a; line-height: 1.8; font-size: 1rem; }
+    .signature { text-align: right; margin-top: 15px; font-weight: bold; color: var(--primary); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  </style>
+</head>
+<body>
+
+  <audio id="bgMusic" loop>
+    <source src="nadhif basalamah - kota ini tak sama tanpamu (slowed  reverb).mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="container">
+    <section class="hero">  
+      <h1>นุมี  <span class="pulse-icon">💖</span></h1>
+      <p class="subtitle">ถึงนุมี — วันที่เหนื่อย ไม่ได้แปลว่าเธออ่อนแอ แต่มันแปลว่าเธอกำลังพยายาม</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>🌸 วันนี้ทำดีที่สุดแล้ว</h3>
+          <p class="quote">แม้จะเหนื่อย แต่อัลลอฮเห็นทุกความตั้งใจของเธอนุมี</p>
+        </div>
+        <div class="card">
+          <h3>💖 ความเหนื่อยมีความหมาย</h3>
+          <p class="quote">เพราะมันคือการเรียนรู้ ทุกหยดเหงื่อ ทุกความอดทน ถูกบันทึกไว้เป็นผลบุญ</p>
+        </div>
+        <div class="card">
+          <h3>🧸 พักผ่อนบ้างนะ</h3>
+          <p class="quote">การพักคือส่วนหนึ่งของความเข้มแข็ง ไม่ใช่การยอมแพ้</p>
+        </div>
+        <div class="card">
+          <h3>✨ เธอไม่ได้อยู่คนเดียว</h3>
+          <p class="quote">อัลลอฮอยู่กับนุมีเสมอ แม้ในวันที่รู้สึกโดดเดี่ยว</p>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="primary-btn" onclick="randomMessage()">
+            🎀 จิ้มเพื่อรับกำลังใจ
+        </button>
+
+        <button class="secondary-btn" onclick="toggleMusic()" id="musicBtn">
+            <span id="musicIcon">🎵</span> <span id="musicText">เปิดเพลง</span>
+        </button>
+      </div>
+
+      <p id="message" class="footer"></p>
+
+      <div class="closing-note">
+          <h3>ถึง พยาบาลคนสวยย...</h3>
+          
+          <div id="openLetterBtn">
+             <button class="secondary-btn" onclick="openLetter()" style="margin: 0 auto; background: #fff0f5;">
+                💌 กดเพื่อเปิดอ่านความในใจ
+             </button>
+          </div>
+
+          <div id="hiddenContent">
+             <p>
+                รู้ว่าเรียนพยาบาลมันเหนื่อย ทั้งขึ้นฝึก ทั้งอ่านหนังสือ 
+                แต่ขอให้รู้ไว้นะว่าแบภูมิใจในตัวเธอมากๆ 
+                ยิ้มให้กำลังตัวเองเยอะๆ พักผ่อนให้พอ เหนื่อยก็หันมานะ แบอยู่ตรงนี้เสมอ
+             </p>
+             <div class="signature">- มุมน้อยๆนี้ หวังว่าเธอจะชอบนะ -</div>
+          </div>
+      </div>
+
+    </section>
+  </div>
+
+  <script>
+    const messages = [
+      'เธอทำได้ดีมากแล้ว วันนี้ขอแค่ผ่านไปอย่างอ่อนโยนกับตัวเองก็พอ 💖',
+      'ยิ้มเยอะๆ นะคนเก่ง กำลังใจอยู่ตรงนี้เสมอ 🌷',
+      'วันหนึ่งความพยายามทั้งหมด จะกลายเป็นรอยยิ้มที่งดงามของคนไข้ ✨',
+      'แหน่ะ! รู้นะว่าเหนื่อย... ส่งหัวใจใหญ่ๆ ไปให้นะคุณพยาบาล 🧸💕',
+    ];
+
+    function randomMessage(){
+      const m = messages[Math.floor(Math.random()*messages.length)];
+      const msgBox = document.getElementById('message');
+      msgBox.style.opacity = 0;
+      msgBox.innerText = m;
+      setTimeout(() => { msgBox.style.transition = 'opacity 0.5s'; msgBox.style.opacity = 1; }, 100);
+    }
+
+    // ฟังก์ชันเปิด/ปิด เพลง
+    function toggleMusic() {
+      const audio = document.getElementById("bgMusic");
+      const icon = document.getElementById("musicIcon");
+      const text = document.getElementById("musicText");
+      const btn = document.getElementById("musicBtn");
+      
+      if (audio.paused) {
+        audio.play().then(() => {
+          icon.innerText = "💿"; // เปลี่ยนไอคอน
+          icon.classList.add("spin"); // สั่งให้หมุน
+          text.innerText = "ฟังเพลงอยู่.."; // เปลี่ยนข้อความ
+          btn.style.borderColor = "#ff8da1"; // เปลี่ยนสีขอบให้เข้มขึ้น
+        }).catch(e => alert("หาไฟล์เพลงไม่เจอครับ ตรวจสอบชื่อไฟล์ music.mp3 อีกทีนะ!"));
+      } else {
+        audio.pause();
+        icon.innerText = "🎵";
+        icon.classList.remove("spin");
+        text.innerText = "เปิดเพลง";
+        btn.style.borderColor = "#ffeef2";
+      }
+    }
+      
+    // ฟังก์ชันเปิดจดหมาย
+    function openLetter() {
+        const btnArea = document.getElementById('openLetterBtn');
+        const content = document.getElementById('hiddenContent');
+        
+        // ซ่อนปุ่มกด
+        btnArea.style.display = 'none';
+        // แสดงเนื้อหา
+        content.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
