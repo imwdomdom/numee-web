@@ -185,7 +185,7 @@
       
       <div class="header-section">
           <div class="header-row">
-              <h1>นุมี <span class="pulse-icon">💖</span></h1>
+              <h1>ถึงนุมี <span class="pulse-icon">💖</span></h1>
               <button class="mini-music-btn" onclick="toggleMusic()" id="musicBtn" style="display:none;">
                  <span id="musicIcon">🎵</span> <span id="musicText">เปิดเพลง</span>
               </button>
@@ -196,7 +196,7 @@
 
           <div id="card-container">
               <div class="story-card show" id="scard1">
-                  <h3>🌸 วันนี้เหนื่อยไหม</h3>
+                  <h3>🌸 วันนี้เธอเหนื่อยไหม</h3>
               </div>
               <div class="story-card" id="scard2">
                   <h3>💖 โอเครึเปล่า</h3>
@@ -205,7 +205,7 @@
                   <h3>🧸 วันนี้เขามีกำลังใจดีๆ จะมาให้เธอ</h3>
               </div>
               <div class="story-card" id="scard4">
-                  <h3>✨ คนเก่งที่กำลังอ่านอยู่ตอนนี้ด้วยนะ</h3>
+                  <h3>✨ คุณพยาบาลที่กำลังอ่านอยู่ตอนนี้ด้วยนะ</h3>
               </div>
           </div>
 
@@ -231,10 +231,11 @@
               </div>
               <div id="hiddenContent">
                  <p>
-                    รู้ว่าเรียนพยาบาลมันเหนื่อย ทั้งขึ้นฝึก ทั้งอ่านหนังสือ 
-                    แบไม่รู้ว่าตอนนี้เธอกำลังเผชิญกับเรื่องอะไรอยู่ แต่ขอให้รู้ไว้นะว่าแบภูมิใจในตัวเธอมากๆ 
-                    ยิ้มให้กำลังใจตัวเองเยอะๆ พักผ่อนให้พอ เหนื่อยก็หันมานะ แบอยู่ตรงนี้เสมอ 
-                    เหนื่อยได้ ท้อได้ แต่อย่าลืมดุอาอ์และซุโกรต่ออัลลอฮ์ให้มากๆนะคะคนเก่ง
+                    เส้นทางพยาบาลที่เธอเดิน ไม่ใช่เรื่องง่าย แต่มันคือหนทางแห่งการช่วยเหลือผู้อื่น ที่เต็มไปด้วยผลบุญ และความอดทน
+                    จดหมายฉบับนี้ไม่ได้มีคำตอบให้กับทุกความเหนื่อย แต่เขาอยากให้มันเป็นเครื่องเตือนใจว่า
+                    อัลลอฮฺอยู่ใกล้เธอเสมอและเขาก็อยู่ข้างเธอ ด้วยหัวใจที่ขอดุอาอ์ให้เธอเข้มแข็ง และอ่อนโยน
+
+
                  </p>
                  <div class="signature">- หวังว่ามุมเล็กๆนี้ เธอจะชอบนะ -</div>
               </div>
@@ -288,7 +289,7 @@
 
   <script>
     // --- ⚠️⚠️⚠️ ใส่ URL ของ Google Apps Script ตรงนี้ ⚠️⚠️⚠️ ---
-    const SCRIPT_URL = 'วาง_URL_จาก_Google_Apps_Script_ที่นี่'; 
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxcAtUBmug2yywdJU9T452868vrMhFgkXu0auLq8pgUmOhPUh_3B1w2aUecIQ8d3hXAZg/exec'; 
     // -----------------------------------------------------------
 
     // --- Enter Site ---
@@ -362,7 +363,7 @@
       if (audio.paused) { audio.play(); } else { audio.pause(); }
     }
 
-    // --- Save Note to Google Sheet ---
+    // --- Save Note (แบบ URL Encoded - เสถียรที่สุด) ---
     function saveNote() {
         const text = document.getElementById('userNote').value;
         const btn = document.getElementById('saveBtn');
@@ -373,6 +374,7 @@
         btn.disabled = true;
 
         if (SCRIPT_URL.includes('วาง_URL')) {
+             // ... ส่วนจำลอง (เหมือนเดิม) ...
              setTimeout(() => {
                 document.getElementById('userNote').style.display = 'none';
                 document.getElementById('savedNoteArea').style.display = 'block';
@@ -383,24 +385,34 @@
              return;
         }
 
+        // --- เปลี่ยนตรงนี้: ใช้ URLSearchParams ---
+        const params = new URLSearchParams();
+        params.append('note', text);
+
         fetch(SCRIPT_URL, {
             method: 'POST',
             mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ note: text })
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: params // ส่งตัวแปร params แทน
         })
-        .then(response => {
+        .then(() => {
             document.getElementById('userNote').style.display = 'none';
             document.getElementById('savedNoteArea').style.display = 'block';
             document.getElementById('savedText').innerText = `"${text}"`;
+            
             localStorage.setItem('numeeNote', text); 
+            
             alert("บันทึกความในใจลงสมุดเรียบร้อยแล้วค่ะ 💖");
             btn.innerText = "เรียบร้อย ✅";
-            loadNotes();
+            
+            setTimeout(loadNotes, 1000);
         })
         .catch(error => {
-            console.error('Error!', error.message);
+            console.error('Error!', error);
             alert("บันทึกไม่สำเร็จ แต่ไม่ต้องห่วงนะ แบเก็บไว้ในเครื่องให้แล้ว!");
+            // Fallback
             document.getElementById('userNote').style.display = 'none';
             document.getElementById('savedNoteArea').style.display = 'block';
             document.getElementById('savedText').innerText = `"${text}"`;
