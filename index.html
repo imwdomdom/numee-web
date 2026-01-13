@@ -28,14 +28,10 @@
     
     /* --- INTRO OVERLAY --- */
     #introOverlay {
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background: linear-gradient(180deg, #fff0f5, #ffe6ee);
         z-index: 9999;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        display: flex; flex-direction: column; align-items: center; justify-content: center;
         transition: opacity 0.8s ease-out;
     }
     .intro-content h1 {
@@ -55,68 +51,59 @@
     }
     
     /* Header Fixed */
-    .header-section {
-        border-bottom: 2px dashed #ffeef2;
-        padding-bottom: 20px; margin-bottom: 20px; text-align: center;
-    }
+    .header-section { border-bottom: 2px dashed #ffeef2; padding-bottom: 20px; margin-bottom: 20px; text-align: center; }
     .header-row { display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 8px; }
     h1{ font-size:2.4rem; margin:0; color: #d65a73; line-height: 1.2; }
-    .subtitle{opacity:.85; font-size: 1rem; margin: 0;}
+    
+    /* Subtitle (ย้ายมาปรับ CSS ให้เหมาะกับการอยู่ใน Page 1) */
+    .subtitle{ opacity:.85; font-size: 1.1rem; margin-bottom: 30px; line-height: 1.6; text-align: center; }
     
     /* --- Page Logic --- */
-    .page-content {
-        display: none; 
-        animation: fadeIn 0.6s ease-out; 
-        flex-grow: 1;
-        flex-direction: column;
-        justify-content: space-between; 
-    }
+    .page-content { display: none; animation: fadeIn 0.6s ease-out; flex-grow: 1; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
     .page-content.active { display: flex; }
 
-    /* Grid Layout */
-    .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px}
+    /* Single Card Style */
+    #card-container {
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        flex-grow: 1; 
+        width: 100%;
+        min-height: 250px;
+    }
+    .story-card {
+        background: var(--card);
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 15px 30px rgba(90, 45, 56, 0.08);
+        border: 2px solid #fff0f5;
+        max-width: 400px;
+        width: 100%;
+        margin: 0 auto;
+        display: none;
+        animation: zoomIn 0.5s ease;
+    }
+    .story-card.show { display: block; }
+    .story-card h3 { color: var(--primary); margin-top: 0; font-size: 1.4rem; margin-bottom: 15px; }
+    .story-card .quote { font-size:1.1rem; line-height:1.8; color: #7a4e5a; margin: 0; }
     
-    /* Card Styles */
-    .card{ background:var(--card); border-radius:20px; padding:20px; box-shadow:0 10px 24px rgba(90, 45, 56, 0.06); transition:transform .2s ease, box-shadow .2s ease; border: 1px solid #fff0f5; }
-    .card:hover{transform:translateY(-2px); box-shadow:0 16px 32px rgba(90, 45, 56, 0.1)}
-    details { width: 100%; cursor: pointer; }
-    summary { list-style: none; outline: none; display: flex; justify-content: space-between; align-items: center; }
-    summary::-webkit-details-marker { display: none; }
-    .card h3 { color: var(--primary); margin: 0; font-size: 1.1rem; display: inline-block; }
-    .arrow-icon { transition: transform 0.3s; font-size: 1.2rem; }
-    details[open] .arrow-icon { transform: rotate(180deg); }
-    .quote { font-size:1.05rem; line-height:1.7; margin-top: 15px; color: #7a4e5a; animation: slideDown 0.4s ease-out; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    
+    @keyframes zoomIn {
+        from { opacity: 0; transform: scale(0.9); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
     /* Buttons */
     button { font-family: 'Mali', cursive; cursor: pointer; transition: all 0.2s; }
     button:active { transform: scale(0.95); }
 
     .primary-btn{ border:none; border-radius:999px; padding:12px 24px; font-size:1.1rem; font-weight: 600; background:linear-gradient(135deg, var(--primary), var(--accent)); color:#fff; box-shadow:0 10px 20px var(--shadow-color); width: 100%; max-width: 300px; margin: 0 auto; display: block; }
-    
     .secondary-btn{ border: 2px solid #ffeef2; border-radius:999px; padding:12px 24px; font-size:1rem; font-weight: 600; background: white; color: var(--primary); box-shadow:0 5px 15px rgba(255, 141, 161, 0.1); display: flex; align-items: center; gap: 8px; margin: 0 auto;}
-    
     .mini-music-btn{ border: 2px solid #ffeef2; border-radius:50px; padding: 5px 15px; font-size: 0.9rem; font-weight: 600; background: white; color: var(--primary); box-shadow:0 4px 10px rgba(255, 141, 161, 0.1); display: flex; align-items: center; gap: 5px; }
     .mini-music-btn:hover { background: #fff0f5; transform: scale(1.05); }
 
     /* Nav Buttons */
-    .nav-buttons {
-        margin-top: 20px; 
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-        padding-top: 20px;
-        border-top: 1px solid #fff0f5;
-    }
-    .nav-btn {
-        background: transparent;
-        border: 2px solid var(--primary);
-        color: var(--primary);
-        padding: 8px 25px;
-        border-radius: 50px;
-        font-weight: bold;
-        font-size: 1rem;
-    }
+    .nav-buttons { margin-top: 30px; display: flex; justify-content: center; gap: 15px; width: 100%; }
+    .nav-btn { background: transparent; border: 2px solid var(--primary); color: var(--primary); padding: 8px 25px; border-radius: 50px; font-weight: bold; font-size: 1rem; }
     .nav-btn:hover { background: #fff0f5; }
     .nav-btn.next { background: var(--primary); color: white; border: none; box-shadow: 0 4px 10px rgba(255, 141, 161, 0.3); }
     .nav-btn.next:hover { background: #ff758f; }
@@ -128,7 +115,7 @@
     @keyframes spin-record { 100% { transform: rotate(360deg); } }
     
     /* Letter Section */
-    .closing-note { background-color: #fff; border: 2px dashed #ff8da1; border-radius: 15px; padding: 25px; position: relative; text-align: center; margin-bottom: 10px; margin-top: 10px;}
+    .closing-note { width:100%; background-color: #fff; border: 2px dashed #ff8da1; border-radius: 15px; padding: 25px; position: relative; text-align: center; margin-bottom: 10px; margin-top: 10px;}
     .closing-note::before { content: '💌'; position: absolute; top: -15px; left: 20px; background: #fff0f5; padding: 0 10px; font-size: 1.5rem; }
     .closing-note h3 { color: #d65a73; margin-top: 10px; margin-bottom: 20px; }
     #hiddenContent { display: none; text-align: left; animation: fadeIn 1s ease-in-out; }
@@ -136,67 +123,25 @@
     .signature { text-align: right; margin-top: 15px; font-weight: bold; color: var(--primary); }
     
     /* Write Box */
-    .write-box {
-        background: #fff;
-        border: 2px solid #ffe6ee;
-        border-radius: 15px;
-        padding: 20px;
-        position: relative;
-        text-align: center;
-    }
-    .write-box textarea {
-        width: 100%;
-        height: 100px; /* ลดความสูงลงนิดหน่อยเพื่อให้มีที่แสดงผล */
-        border: 1px solid #ffc4d6;
-        border-radius: 10px;
-        padding: 15px;
-        font-family: 'Mali', cursive;
-        font-size: 1rem;
-        color: #5a2d38;
-        resize: none;
-        outline: none;
-        background: #fffdfd;
-        margin-bottom: 10px;
-    }
+    .write-box { width: 100%; background: #fff; border: 2px solid #ffe6ee; border-radius: 15px; padding: 20px; position: relative; text-align: center; }
+    .write-box textarea { width: 100%; height: 150px; border: 1px solid #ffc4d6; border-radius: 10px; padding: 15px; font-family: 'Mali', cursive; font-size: 1rem; color: #5a2d38; resize: none; outline: none; background: #fffdfd; }
     .write-box textarea:focus { border-color: #ff8da1; box-shadow: 0 0 8px rgba(255, 141, 161, 0.2); }
+    .write-actions { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
+    .btn-save { background: #ffd1dc; color: #5a2d38; border: none; width: 100%; max-width: 250px; padding: 12px; }
+    .btn-save:hover { background: #ffc2d1; }
+    #savedNoteArea { display: none; background: #fff9fb; border: 1px dashed #ff8da1; padding: 20px; border-radius: 10px; margin-top: 10px; }
     
-    .write-actions {
-        display: flex;
-        gap: 10px;
-        margin-top: 5px;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-    .btn-save { background: #ffd1dc; color: #5a2d38; border: none; }
-
-    /* --- ส่วนแสดงข้อความย้อนหลัง (Community Board) --- */
-    #display-area {
-        max-height: 250px;
-        overflow-y: auto;
-        text-align: left;
-        margin-top: 10px;
-        padding-right: 5px;
-        /* สไตล์ Scrollbar */
-        scrollbar-width: thin;
-        scrollbar-color: #ffc4d6 #fff0f5;
-    }
+    /* Community Board */
+    #display-area { width: 100%; max-height: 150px; overflow-y: auto; text-align: left; margin-top: 10px; padding-right: 5px; scrollbar-width: thin; scrollbar-color: #ffc4d6 #fff0f5; }
     #display-area::-webkit-scrollbar { width: 8px; }
     #display-area::-webkit-scrollbar-track { background: #fff0f5; border-radius: 10px; }
     #display-area::-webkit-scrollbar-thumb { background-color: #ffc4d6; border-radius: 10px; border: 2px solid #fff0f5; }
-
-    .note-item {
-        background: #fff9fb;
-        border: 1px dashed #ffc4d6;
-        border-radius: 12px;
-        padding: 10px 15px;
-        margin-bottom: 10px;
-        animation: fadeIn 0.5s ease;
-    }
-    .note-item p { margin: 0; font-size: 1rem; color: #5a2d38; }
-    .note-time { display: block; font-size: 0.75rem; color: #b58da0; margin-top: 5px; text-align: right; }
+    .note-item { background: #fff9fb; border: 1px dashed #ffc4d6; border-radius: 12px; padding: 10px 15px; margin-bottom: 10px; animation: fadeIn 0.5s ease; }
+    .note-item p { margin: 0; font-size: 0.9rem; color: #5a2d38; }
+    .note-time { display: block; font-size: 0.7rem; color: #b58da0; margin-top: 5px; text-align: right; }
 
     /* Final Gift */
-    .final-gift { padding: 40px 20px; background: linear-gradient(135deg, #fff5f8, #fff); border: 2px solid #ff8da1; border-radius: 20px; text-align: center; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin-top: 20px;}
+    .final-gift { padding: 40px 20px; background: linear-gradient(135deg, #fff5f8, #fff); border: 2px solid #ff8da1; border-radius: 20px; text-align: center; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin-top: 20px; width: 100%;}
     .final-gift:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(255, 141, 161, 0.2); }
     .final-gift h3 { color: #d65a73; margin: 0 0 10px; font-size: 1.8rem; }
     .final-gift p { margin: 0; color: var(--text); font-size: 1.1rem; }
@@ -208,7 +153,15 @@
     @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    .footer { text-align: center; min-height: 30px; margin-top: 40px; color: var(--primary); font-weight: bold;}
+    /* Animation Chasing */
+    .chase-scene { position: relative; width: 100%; height: 80px; overflow: hidden; margin-bottom: 10px; pointer-events: none; }
+    .boy-runner { position: absolute; bottom: 10px; font-size: 3.5rem; animation: runAcross 8s linear infinite; z-index: 5; }
+    .butterfly-group { position: absolute; bottom: 30px; font-size: 2rem; animation: flyAcross 8s linear infinite, flutter 1s ease-in-out infinite alternate; z-index: 4; }
+    @keyframes runAcross { 0% { left: -15%; transform: scaleX(1); } 100% { left: 115%; transform: scaleX(1); } }
+    @keyframes flyAcross { 0% { left: 5%; } 100% { left: 135%; } }
+    @keyframes flutter { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-15px) rotate(10deg); } }
+
+    .footer { text-align: center; min-height: 30px; margin-top: 20px; color: var(--primary); font-weight: bold;}
 
   </style>
 </head>
@@ -233,44 +186,36 @@
       <div class="header-section">
           <div class="header-row">
               <h1>นุมี <span class="pulse-icon">💖</span></h1>
-              
+              <button class="mini-music-btn" onclick="toggleMusic()" id="musicBtn" style="display:none;">
+                 <span id="musicIcon">🎵</span> <span id="musicText">เปิดเพลง</span>
+              </button>
           </div>
-      </div>
+          </div>
+
       <div id="page1" class="page-content active"> 
-          <div class="grid">
-            <div class="card">
-              <details>
-                <summary><h3>🌸 วันนี้ทำดีที่สุดแล้ว</h3><span class="arrow-icon">👇</span></summary>
-                <p class="quote">แม้จะเหนื่อย แต่อัลลอฮเห็นทุกความตั้งใจของเธอนุมี</p>
-              </details>
-            </div>
-            <div class="card">
-              <details>
-                <summary><h3>💖 ความเหนื่อยมีความหมาย</h3><span class="arrow-icon">👇</span></summary>
-                <p class="quote">เพราะมันคือการเรียนรู้ ทุกหยดเหงื่อ ทุกความอดทน ถูกบันทึกไว้เป็นผลบุญ</p>
-              </details>
-            </div>
-            <div class="card">
-              <details>
-                <summary><h3>🧸 พักผ่อนบ้างนะ</h3><span class="arrow-icon">👇</span></summary>
-                <p class="quote">การพักคือส่วนหนึ่งของความเข้มแข็ง ไม่ใช่การยอมแพ้</p>
-              </details>
-            </div>
-            <div class="card">
-              <details>
-                <summary><h3>✨ เธอไม่ได้อยู่คนเดียว</h3><span class="arrow-icon">👇</span></summary>
-                <p class="quote">อัลลอฮอยู่กับนุมีเสมอ แม้ในวันที่รู้สึกโดดเดี่ยว</p>
-              </details>
-            </div>
+
+          <div id="card-container">
+              <div class="story-card show" id="scard1">
+                  <h3>🌸 วันนี้เหนื่อยไหม</h3>
+              </div>
+              <div class="story-card" id="scard2">
+                  <h3>💖 โอเครึเปล่า</h3>
+              </div>
+              <div class="story-card" id="scard3">
+                  <h3>🧸 วันนี้เขามีกำลังใจดีๆ จะมาให้เธอ</h3>
+              </div>
+              <div class="story-card" id="scard4">
+                  <h3>✨ คนเก่งที่กำลังอ่านอยู่ตอนนี้ด้วยนะ</h3>
+              </div>
           </div>
 
           <div class="nav-buttons">
-              <button class="nav-btn next" onclick="showPage('page2')">ไปต่อ 👉</button>
+              <button id="nextCardBtn" class="nav-btn next" onclick="nextCard()">ไปต่อ 👉</button>
           </div>
       </div>
 
       <div id="page2" class="page-content">
-          <div style="text-align: center;">
+          <div style="text-align: center; width: 100%;">
               <button class="primary-btn" onclick="randomMessage()">
                   🎀 จิ้มเพื่อรับกำลังใจ
               </button>
@@ -281,45 +226,50 @@
               <h3>ถึง พยาบาลคนสวยย...</h3>
               <div id="openLetterBtn">
                  <button class="secondary-btn" onclick="openLetter()" style="margin: 0 auto; background: #fff0f5;">
-                   💌 กดเพื่อเปิดอ่านความในใจ
+                    💌 กดเพื่อเปิดอ่านความในใจ
                  </button>
               </div>
               <div id="hiddenContent">
                  <p>
-                    เส้นทางพยาบาลที่เธอเดิน ไม่ใช่เรื่องง่าย แต่มันคือหนทางแห่งการช่วยเหลือผู้อื่น ที่เต็มไปด้วยผลบุญ และความอดทน
-                    จดหมายฉบับนี้ไม่ได้มีคำตอบให้กับทุกความเหนื่อย แต่เขาอยากให้มันเป็นเครื่องเตือนใจว่า
-                    อัลลอฮฺอยู่ใกล้เธอเสมอและเขาก็อยู่ข้างเธอ ด้วยหัวใจที่ขอดุอาอ์ให้เธอเข้มแข็ง และอ่อนโยน
+                    รู้ว่าเรียนพยาบาลมันเหนื่อย ทั้งขึ้นฝึก ทั้งอ่านหนังสือ 
+                    แบไม่รู้ว่าตอนนี้เธอกำลังเผชิญกับเรื่องอะไรอยู่ แต่ขอให้รู้ไว้นะว่าแบภูมิใจในตัวเธอมากๆ 
+                    ยิ้มให้กำลังใจตัวเองเยอะๆ พักผ่อนให้พอ เหนื่อยก็หันมานะ แบอยู่ตรงนี้เสมอ 
+                    เหนื่อยได้ ท้อได้ แต่อย่าลืมดุอาอ์และซุโกรต่ออัลลอฮ์ให้มากๆนะคะคนเก่ง
                  </p>
                  <div class="signature">- หวังว่ามุมเล็กๆนี้ เธอจะชอบนะ -</div>
               </div>
           </div>
 
           <div class="nav-buttons">
-              <button class="nav-btn" onclick="showPage('page1')">👈 กลับ</button>
-              <button class="nav-btn next" onclick="showPage('page3')">เขียนจดหมาย 📝</button>
+              <button class="nav-btn" onclick="showPage('page1'); resetCards();">👈 กลับ</button>
+              <button class="nav-btn next" onclick="showPage('page3')">เขียนตอบกลับ 📝</button>
           </div>
       </div>
 
       <div id="page3" class="page-content">
-          <h3 style="text-align:center; color:#d65a73;">📝 มีอะไรอยากจะบอกความในใจไหม？</h3>
+          <h3 style="text-align:center; color:#d65a73;">📝 มีอะไรอยากจะบอกไหม?</h3>
           
           <div class="write-box">
               <textarea id="userNote" placeholder="พิมพ์ความในใจ หรือระบายความเหนื่อยตรงนี้ได้เลยนะ..."></textarea>
               
-              <div class="write-actions">
-                  <button class="nav-btn btn-save" onclick="saveNote()">เก็บไว้ในใจ</button>
+              <div id="savedNoteArea">
+                  <p id="savedText" style="color:#5a2d38; font-style:italic;"></p>
               </div>
 
+              <div class="write-actions">
+                  <button id="saveBtn" class="nav-btn btn-save" onclick="saveNote()">เก็บไว้ในใจ 💌</button>
+              </div>
               
+              <div id="display-area"></div>
           </div>
 
           <div class="nav-buttons">
               <button class="nav-btn" onclick="showPage('page2')">👈 กลับ</button>
-              <button class="nav-btn next" onclick="showPage('page4')">ของขวัญสุดท้าย 🎁</button>
+              <button class="nav-btn next" onclick="showPage('page7')">ของขวัญสุดท้าย 🎁</button>
           </div>
       </div>
 
-      <div id="page4" class="page-content">
+      <div id="page7" class="page-content">
 
           <div class="final-gift" onclick="triggerHeartRain()">
               <span class="gift-icon">🎁</span>
@@ -329,7 +279,7 @@
 
           <div class="nav-buttons">
               <button class="nav-btn" onclick="showPage('page3')">👈 กลับ</button>
-              <button class="nav-btn" onclick="showPage('page1')">🏠 หน้าแรก</button>
+              <button class="nav-btn" onclick="showPage('page1'); resetCards();">🏠 หน้าแรก</button>
           </div>
       </div>
 
@@ -337,100 +287,22 @@
   </div>
 
   <script>
-    // ------------------------------------------------------------------
-    // 🔴🔴🔴 นำ URL จาก Google Apps Script (ขั้นตอนที่ 1) มาวางตรงนี้ !!! 🔴🔴🔴
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzUcY0Opd0_Anl4b2VlsDlshXhdl1PcR3h8Ka_yf4CRGyx9KMBWKzqDn-rfSSPtOsZWTw/exec'; 
-    // ตัวอย่าง: 'https://script.google.com/macros/s/AKfycbx.../exec'
-    // ------------------------------------------------------------------
+    // --- ⚠️⚠️⚠️ ใส่ URL ของ Google Apps Script ตรงนี้ ⚠️⚠️⚠️ ---
+    const SCRIPT_URL = 'วาง_URL_จาก_Google_Apps_Script_ที่นี่'; 
+    // -----------------------------------------------------------
 
-    // --- ฟังก์ชันดึงข้อความจาก Google Sheet (Load) ---
-    function loadNotes() {
-        if(SCRIPT_URL.includes('วาง_URL')) {
-            document.getElementById("display-area").innerHTML = "<p>⚠️ กรุณาใส่ URL ของ Google Script ในโค้ดก่อนครับ</p>";
-            return;
-        }
-
-        fetch(SCRIPT_URL)
-        .then(response => response.json())
-        .then(data => {
-            const displayArea = document.getElementById("display-area");
-            displayArea.innerHTML = ""; // เคลียร์ของเก่า
-
-            if(data.length === 0) {
-                displayArea.innerHTML = "<p style='color:#aaa;'>ยังไม่มีข้อความ... มาเขียนเป็นคนแรกสิ!</p>";
-                return;
-            }
-
-            // ข้อมูลใหม่สุดอยู่ล่างสุด -> ใช้ reverse() เพื่อเอาใหม่อยู่บน
-            data.reverse().forEach(row => {
-                // row[0] คือวันที่, row[1] คือข้อความ
-                let dateStr = "";
-                try {
-                    const d = new Date(row[0]);
-                    dateStr = d.toLocaleDateString('th-TH') + ' ' + d.toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'});
-                } catch(e) { dateStr = ""; }
-
-                const msg = row[1];
-                
-                const html = `
-                    <div class="note-item">
-                        <p>${msg}</p>
-                        <small class="note-time">🕒 ${dateStr}</small>
-                    </div>
-                `;
-                displayArea.innerHTML += html;
-            });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById("display-area").innerHTML = "<p style='color:red;'>โหลดข้อมูลไม่สำเร็จ</p>";
-        });
-    }
-
-    // --- ฟังก์ชันบันทึกข้อความลง Google Sheet (Save) ---
-    function saveNote() {
-        const input = document.getElementById('userNote');
-        const text = input.value;
-        const btn = document.querySelector('.btn-save');
-
-        if(text.trim() === "") { alert("พิมพ์อะไรสักหน่อยสิคะ 😊"); return; }
-        if(SCRIPT_URL.includes('วาง_URL')) { alert("อย่าลืมใส่ Script URL ในโค้ดนะครับ!"); return; }
-
-        // เปลี่ยนสถานะปุ่ม
-        const oldText = btn.innerText;
-        btn.innerText = "กำลังบันทึก...";
-        btn.disabled = true;
-
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', // สำคัญมาก
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text })
-        }).then(() => {
-            alert("บันทึกเรียบร้อย น่าร้กกกที่สุดด 💖");
-            input.value = ""; // เคลียร์ช่อง
-            btn.innerText = oldText;
-            btn.disabled = false;
-            loadNotes(); // โหลดข้อความใหม่ทันที
-        }).catch(err => {
-            console.error(err);
-            alert("เกิดข้อผิดพลาดในการบันทึก");
-            btn.innerText = oldText;
-            btn.disabled = false;
-        });
-    }
-
-    // --- ฟังก์ชันกดเข้าเว็บ (Intro Button) ---
+    // --- Enter Site ---
     function enterSite() {
         const audio = document.getElementById("bgMusic");
-        audio.play().catch(error => console.log("Audio play failed: ", error));
-
+        audio.play().catch(error => { console.log("Audio play failed"); });
         const overlay = document.getElementById('introOverlay');
         overlay.classList.add('intro-hidden');
         setTimeout(() => { overlay.style.display = 'none'; }, 800);
+        
+        if (!SCRIPT_URL.includes('วาง_URL')) { loadNotes(); }
     }
 
-    // --- Page Switching Logic ---
+    // --- Page Switching ---
     function showPage(pageId) {
         document.querySelectorAll('.page-content').forEach(page => {
             page.style.display = 'none';
@@ -441,14 +313,35 @@
         setTimeout(() => { targetPage.classList.add('active'); }, 10);
     }
 
-    // --- Message Logic ---
+    // --- Story Card Logic ---
+    let currentCard = 1;
+    const totalCards = 4;
+
+    function nextCard() {
+        if(currentCard < totalCards) {
+            document.getElementById(`scard${currentCard}`).classList.remove('show');
+            currentCard++;
+            document.getElementById(`scard${currentCard}`).classList.add('show');
+        } else {
+            showPage('page2');
+        }
+    }
+
+    function resetCards() {
+        currentCard = 1;
+        for(let i=1; i<=totalCards; i++) {
+            document.getElementById(`scard${i}`).classList.remove('show');
+        }
+        document.getElementById('scard1').classList.add('show');
+    }
+
+    // --- Random Message ---
     const messages = [
       'แหน่ะ! รู้นะว่าเหนื่อย... ส่งหัวใจใหญ่ๆ ไปให้นะคุณพยาบาล 🧸💕',
-      'เธอทำได้ดีมากแล้ว วันนี้ขอแค่ผ่านไปอย่างอ่อนโยนกับตัวเองก็พอ 💖',
+      'ถึงเธอจะเหนื่อยจากฝึกแค่ไหน เขาภูมิใจในตัวเธอเสมอ 💖',
       'ยิ้มเยอะๆ นะคนเก่ง กำลังใจอยู่ตรงนี้เสมอ 🌷',
-      'วันหนึ่งความพยายามทั้งหมด จะกลายเป็นรอยยิ้มที่งดงามของคนไข้ ✨',
+      'เหนื่อยเมื่อไหร่ อย่าลืมว่ามีใครคนหนึ่งคอยเป็นห่วงตลอดด ✨',
     ];
-
     function randomMessage(){
       const m = messages[Math.floor(Math.random()*messages.length)];
       const msgBox = document.getElementById('message');
@@ -457,20 +350,100 @@
       setTimeout(() => { msgBox.style.transition = 'opacity 0.5s'; msgBox.style.opacity = 1; }, 100);
     }
       
-    // --- Letter Logic ---
+    // --- Letter Open ---
     function openLetter() {
         document.getElementById('openLetterBtn').style.display = 'none';
         document.getElementById('hiddenContent').style.display = 'block';
     }
 
-    // --- Heart Rain Logic ---
+    // --- Music Toggle ---
+    function toggleMusic() {
+      const audio = document.getElementById("bgMusic");
+      if (audio.paused) { audio.play(); } else { audio.pause(); }
+    }
+
+    // --- Save Note to Google Sheet ---
+    function saveNote() {
+        const text = document.getElementById('userNote').value;
+        const btn = document.getElementById('saveBtn');
+        
+        if(text.trim() === "") { alert("พิมพ์อะไรสักหน่อยสิคะ 😊"); return; }
+        
+        btn.innerText = "กำลังบันทึก...";
+        btn.disabled = true;
+
+        if (SCRIPT_URL.includes('วาง_URL')) {
+             setTimeout(() => {
+                document.getElementById('userNote').style.display = 'none';
+                document.getElementById('savedNoteArea').style.display = 'block';
+                document.getElementById('savedText').innerText = `"${text}"`;
+                alert("บันทึกในเครื่องเรียบร้อย (อย่าลืมใส่ Script URL นะครับ)");
+                btn.innerText = "เรียบร้อย ✅";
+             }, 1000);
+             return;
+        }
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ note: text })
+        })
+        .then(response => {
+            document.getElementById('userNote').style.display = 'none';
+            document.getElementById('savedNoteArea').style.display = 'block';
+            document.getElementById('savedText').innerText = `"${text}"`;
+            localStorage.setItem('numeeNote', text); 
+            alert("บันทึกความในใจลงสมุดเรียบร้อยแล้วค่ะ 💖");
+            btn.innerText = "เรียบร้อย ✅";
+            loadNotes();
+        })
+        .catch(error => {
+            console.error('Error!', error.message);
+            alert("บันทึกไม่สำเร็จ แต่ไม่ต้องห่วงนะ แบเก็บไว้ในเครื่องให้แล้ว!");
+            document.getElementById('userNote').style.display = 'none';
+            document.getElementById('savedNoteArea').style.display = 'block';
+            document.getElementById('savedText').innerText = `"${text}"`;
+        });
+    }
+
+    // --- Load Notes ---
+    function loadNotes() {
+        if(SCRIPT_URL.includes('วาง_URL')) return;
+        fetch(SCRIPT_URL)
+        .then(response => response.json())
+        .then(data => {
+            const displayArea = document.getElementById("display-area");
+            displayArea.innerHTML = "";
+            if(data.length === 0) { displayArea.innerHTML = "<p style='color:#aaa;'>ยังไม่มีข้อความ...</p>"; return; }
+            data.reverse().forEach(row => {
+                let dateStr = "";
+                try { const d = new Date(row[0]); dateStr = d.toLocaleDateString('th-TH') + ' ' + d.toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'}); } catch(e) {}
+                const msg = row[1];
+                const html = `<div class="note-item"><p>${msg}</p><small class="note-time">🕒 ${dateStr}</small></div>`;
+                displayArea.innerHTML += html;
+            });
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    window.onload = function() {
+        const saved = localStorage.getItem('numeeNote');
+        if(saved) {
+            document.getElementById('userNote').value = saved;
+        }
+    }
+
+    // --- Heart Rain ---
     function triggerHeartRain() {
         document.getElementById('giftTitle').innerText = "ท่านหญิงฟาตีมะฮเคยกล่าวไว้ว่า:";
         document.getElementById('giftText').innerText = "ตกหลุมรักใครสักคนเป็นเรื่องธรรมดา แต่ตกหลุมรักหลายๆครั้งกับคนเดิม เป็นเรื่องที่พิเศษมาก ";
         
+        const audio = document.getElementById("bgMusic");
+        if(audio.paused) audio.play();
+
         const symbols = ['💖', '💕', '💗', '🌷', '✨', '🩺', '💐'];
         const duration = 5000;
-
         const interval = setInterval(() => {
             const e = document.createElement('div');
             e.classList.add('heart-rain');
@@ -481,13 +454,8 @@
             document.body.appendChild(e);
             setTimeout(() => { e.remove(); }, 5000);
         }, 100);
-
         setTimeout(() => { clearInterval(interval); }, duration);
     }
-
-    // โหลดข้อความเมื่อเปิดเว็บ
-    window.onload = loadNotes;
-
   </script>
 </body>
 </html>
