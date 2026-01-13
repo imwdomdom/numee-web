@@ -26,23 +26,39 @@
     }
     .container{max-width:960px; padding:24px; width: 100%; position: relative; z-index: 10;}
     
+    /* --- INTRO OVERLAY --- */
+    #introOverlay {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(180deg, #fff0f5, #ffe6ee);
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.8s ease-out;
+    }
+    .intro-content h1 {
+        font-size: 2.5rem; color: #d65a73; margin-bottom: 30px;
+        animation: float 3s ease-in-out infinite; text-align: center; line-height: 1.5;
+    }
+    .intro-hidden { opacity: 0; pointer-events: none; }
+
+    /* Main Layout */
     .hero{
       background: radial-gradient(1200px 400px at 10% -10%, #fffbfd, transparent),
                   radial-gradient(1200px 400px at 90% 110%, #fff0f3, transparent);
       border-radius:24px; padding:30px; box-shadow:0 20px 40px rgba(90, 45, 56, 0.08);
       border: 2px solid #ffeef2; 
-      min-height: 650px; /* เพิ่มความสูงเผื่อไว้สำหรับหน้าเขียน */
+      min-height: 650px; 
       display: flex; flex-direction: column;
     }
     
     /* Header Fixed */
     .header-section {
         border-bottom: 2px dashed #ffeef2;
-        padding-bottom: 20px;
-        margin-bottom: 20px;
-        text-align: center;
+        padding-bottom: 20px; margin-bottom: 20px; text-align: center;
     }
-
     .header-row { display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 8px; }
     h1{ font-size:2.4rem; margin:0; color: #d65a73; line-height: 1.2; }
     .subtitle{opacity:.85; font-size: 1rem; margin: 0;}
@@ -105,6 +121,7 @@
     .nav-btn.next { background: var(--primary); color: white; border: none; box-shadow: 0 4px 10px rgba(255, 141, 161, 0.3); }
     .nav-btn.next:hover { background: #ff758f; }
     
+    /* Animation Helpers */
     .pulse-icon { display: inline-block; animation: pulse-heart 1.5s infinite ease-in-out; }
     @keyframes pulse-heart{0%,100%{transform:scale(1)} 50%{transform:scale(1.2)}}
     .spin { animation: spin-record 2s linear infinite; display: inline-block; }
@@ -118,7 +135,7 @@
     #hiddenContent p { color: #7a4e5a; line-height: 1.8; font-size: 1rem; }
     .signature { text-align: right; margin-top: 15px; font-weight: bold; color: var(--primary); }
     
-    /* --- CSS สำหรับกล่องเขียนข้อความ (เพิ่มใหม่) --- */
+    /* Write Box */
     .write-box {
         background: #fff;
         border: 2px solid #ffe6ee;
@@ -129,7 +146,7 @@
     }
     .write-box textarea {
         width: 100%;
-        height: 150px;
+        height: 100px; /* ลดความสูงลงนิดหน่อยเพื่อให้มีที่แสดงผล */
         border: 1px solid #ffc4d6;
         border-radius: 10px;
         padding: 15px;
@@ -139,26 +156,44 @@
         resize: none;
         outline: none;
         background: #fffdfd;
+        margin-bottom: 10px;
     }
     .write-box textarea:focus { border-color: #ff8da1; box-shadow: 0 0 8px rgba(255, 141, 161, 0.2); }
     
     .write-actions {
         display: flex;
         gap: 10px;
-        margin-top: 15px;
+        margin-top: 5px;
         justify-content: center;
+        margin-bottom: 20px;
     }
-    .btn-line { background: #06c755; color: white; border: none; } /* สีเขียวไลน์ */
     .btn-save { background: #ffd1dc; color: #5a2d38; border: none; }
 
-    #savedNoteArea {
-        display: none;
-        background: #fff9fb;
-        border: 1px dashed #ff8da1;
-        padding: 20px;
-        border-radius: 10px;
+    /* --- ส่วนแสดงข้อความย้อนหลัง (Community Board) --- */
+    #display-area {
+        max-height: 250px;
+        overflow-y: auto;
+        text-align: left;
         margin-top: 10px;
+        padding-right: 5px;
+        /* สไตล์ Scrollbar */
+        scrollbar-width: thin;
+        scrollbar-color: #ffc4d6 #fff0f5;
     }
+    #display-area::-webkit-scrollbar { width: 8px; }
+    #display-area::-webkit-scrollbar-track { background: #fff0f5; border-radius: 10px; }
+    #display-area::-webkit-scrollbar-thumb { background-color: #ffc4d6; border-radius: 10px; border: 2px solid #fff0f5; }
+
+    .note-item {
+        background: #fff9fb;
+        border: 1px dashed #ffc4d6;
+        border-radius: 12px;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        animation: fadeIn 0.5s ease;
+    }
+    .note-item p { margin: 0; font-size: 1rem; color: #5a2d38; }
+    .note-time { display: block; font-size: 0.75rem; color: #b58da0; margin-top: 5px; text-align: right; }
 
     /* Final Gift */
     .final-gift { padding: 40px 20px; background: linear-gradient(135deg, #fff5f8, #fff); border: 2px solid #ff8da1; border-radius: 20px; text-align: center; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; margin-top: 20px;}
@@ -183,15 +218,21 @@
     <source src="nadhif basalamah - kota ini tak sama tanpamu (slowed  reverb).mp3" type="audio/mpeg">
   </audio>
 
+  <div id="introOverlay">
+      <div class="intro-content">
+          <h1>Assalamualaikum...<br>Numee <span class="pulse-icon">💖</span></h1>
+          <button class="primary-btn" onclick="enterSite()" style="font-size: 1.5rem; padding: 15px 40px; margin-top: 20px;">
+              Waalaikumsalam 
+          </button>
+      </div>
+  </div>
+
   <div class="container">
     <section class="hero">  
       
       <div class="header-section">
           <div class="header-row">
-              <h1>ถึงนุมี... <span class="pulse-icon">💖</span></h1>
-              <button class="mini-music-btn" onclick="toggleMusic()" id="musicBtn">
-                 <span id="musicIcon">🎵</span> <span id="musicText">เปิดเพลง</span>
-              </button>
+              <h1>นุมี <span class="pulse-icon">💖</span></h1>
           </div>
       </div>
 
@@ -200,7 +241,7 @@
             <div class="card">
               <details>
                 <summary><h3>🌸 วันนี้ทำดีที่สุดแล้ว</h3><span class="arrow-icon">👇</span></summary>
-                <p class="quote">แม้จะเหนื่อย แต่อัลลอฮเห็นทุกความตั้งใจของเธอ</p>
+                <p class="quote">แม้จะเหนื่อย แต่อัลลอฮเห็นทุกความตั้งใจของเธอนุมี</p>
               </details>
             </div>
             <div class="card">
@@ -218,7 +259,7 @@
             <div class="card">
               <details>
                 <summary><h3>✨ เธอไม่ได้อยู่คนเดียว</h3><span class="arrow-icon">👇</span></summary>
-                <p class="quote">อัลลอฮอยู่กับเธอเสมอ แม้ในวันที่รู้สึกโดดเดี่ยว</p>
+                <p class="quote">อัลลอฮอยู่กับนุมีเสมอ แม้ในวันที่รู้สึกโดดเดี่ยว</p>
               </details>
             </div>
           </div>
@@ -240,7 +281,7 @@
               <h3>ถึง พยาบาลคนสวยย...</h3>
               <div id="openLetterBtn">
                  <button class="secondary-btn" onclick="openLetter()" style="margin: 0 auto; background: #fff0f5;">
-                    💌 กดเพื่อเปิดอ่านความในใจ
+                   💌 กดเพื่อเปิดอ่านความในใจ
                  </button>
               </div>
               <div id="hiddenContent">
@@ -255,23 +296,21 @@
 
           <div class="nav-buttons">
               <button class="nav-btn" onclick="showPage('page1')">👈 กลับ</button>
-              <button class="nav-btn next" onclick="showPage('page3')">ไปต่อ 👉</button>
+              <button class="nav-btn next" onclick="showPage('page3')">เขียนจดหมาย 📝</button>
           </div>
       </div>
 
       <div id="page3" class="page-content">
-          <h3 style="text-align:center; color:#d65a73;">📝 มีอะไรอยากจะบอกเขาไหม?</h3>
+          <h3 style="text-align:center; color:#d65a73;">📝 มีอะไรอยากจะบอกความในใจไหม？</h3>
           
           <div class="write-box">
               <textarea id="userNote" placeholder="พิมพ์ความในใจ หรือระบายความเหนื่อยตรงนี้ได้เลยนะ..."></textarea>
               
-              <div id="savedNoteArea">
-                  <p id="savedText" style="color:#5a2d38; font-style:italic;"></p>
-              </div>
-
               <div class="write-actions">
                   <button class="nav-btn btn-save" onclick="saveNote()">เก็บไว้ในใจ</button>
               </div>
+
+              
           </div>
 
           <div class="nav-buttons">
@@ -281,7 +320,7 @@
       </div>
 
       <div id="page4" class="page-content">
-          
+
           <div class="final-gift" onclick="triggerHeartRain()">
               <span class="gift-icon">🎁</span>
               <h3 id="giftTitle">กล่องพิเศษ</h3>
@@ -298,6 +337,99 @@
   </div>
 
   <script>
+    // ------------------------------------------------------------------
+    // 🔴🔴🔴 นำ URL จาก Google Apps Script (ขั้นตอนที่ 1) มาวางตรงนี้ !!! 🔴🔴🔴
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzUcY0Opd0_Anl4b2VlsDlshXhdl1PcR3h8Ka_yf4CRGyx9KMBWKzqDn-rfSSPtOsZWTw/exec'; 
+    // ตัวอย่าง: 'https://script.google.com/macros/s/AKfycbx.../exec'
+    // ------------------------------------------------------------------
+
+    // --- ฟังก์ชันดึงข้อความจาก Google Sheet (Load) ---
+    function loadNotes() {
+        if(SCRIPT_URL.includes('วาง_URL')) {
+            document.getElementById("display-area").innerHTML = "<p>⚠️ กรุณาใส่ URL ของ Google Script ในโค้ดก่อนครับ</p>";
+            return;
+        }
+
+        fetch(SCRIPT_URL)
+        .then(response => response.json())
+        .then(data => {
+            const displayArea = document.getElementById("display-area");
+            displayArea.innerHTML = ""; // เคลียร์ของเก่า
+
+            if(data.length === 0) {
+                displayArea.innerHTML = "<p style='color:#aaa;'>ยังไม่มีข้อความ... มาเขียนเป็นคนแรกสิ!</p>";
+                return;
+            }
+
+            // ข้อมูลใหม่สุดอยู่ล่างสุด -> ใช้ reverse() เพื่อเอาใหม่อยู่บน
+            data.reverse().forEach(row => {
+                // row[0] คือวันที่, row[1] คือข้อความ
+                let dateStr = "";
+                try {
+                    const d = new Date(row[0]);
+                    dateStr = d.toLocaleDateString('th-TH') + ' ' + d.toLocaleTimeString('th-TH', {hour: '2-digit', minute:'2-digit'});
+                } catch(e) { dateStr = ""; }
+
+                const msg = row[1];
+                
+                const html = `
+                    <div class="note-item">
+                        <p>${msg}</p>
+                        <small class="note-time">🕒 ${dateStr}</small>
+                    </div>
+                `;
+                displayArea.innerHTML += html;
+            });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById("display-area").innerHTML = "<p style='color:red;'>โหลดข้อมูลไม่สำเร็จ</p>";
+        });
+    }
+
+    // --- ฟังก์ชันบันทึกข้อความลง Google Sheet (Save) ---
+    function saveNote() {
+        const input = document.getElementById('userNote');
+        const text = input.value;
+        const btn = document.querySelector('.btn-save');
+
+        if(text.trim() === "") { alert("พิมพ์อะไรสักหน่อยสิคะ 😊"); return; }
+        if(SCRIPT_URL.includes('วาง_URL')) { alert("อย่าลืมใส่ Script URL ในโค้ดนะครับ!"); return; }
+
+        // เปลี่ยนสถานะปุ่ม
+        const oldText = btn.innerText;
+        btn.innerText = "กำลังบันทึก...";
+        btn.disabled = true;
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', // สำคัญมาก
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text })
+        }).then(() => {
+            alert("บันทึกความในใจเรียบร้อยครับ 💖");
+            input.value = ""; // เคลียร์ช่อง
+            btn.innerText = oldText;
+            btn.disabled = false;
+            loadNotes(); // โหลดข้อความใหม่ทันที
+        }).catch(err => {
+            console.error(err);
+            alert("เกิดข้อผิดพลาดในการบันทึก");
+            btn.innerText = oldText;
+            btn.disabled = false;
+        });
+    }
+
+    // --- ฟังก์ชันกดเข้าเว็บ (Intro Button) ---
+    function enterSite() {
+        const audio = document.getElementById("bgMusic");
+        audio.play().catch(error => console.log("Audio play failed: ", error));
+
+        const overlay = document.getElementById('introOverlay');
+        overlay.classList.add('intro-hidden');
+        setTimeout(() => { overlay.style.display = 'none'; }, 800);
+    }
+
     // --- Page Switching Logic ---
     function showPage(pageId) {
         document.querySelectorAll('.page-content').forEach(page => {
@@ -312,7 +444,7 @@
     // --- Message Logic ---
     const messages = [
       'แหน่ะ! รู้นะว่าเหนื่อย... ส่งหัวใจใหญ่ๆ ไปให้นะคุณพยาบาล 🧸💕',
-      'เธอไม่จำเป็นต้องทุกอย่าง แค่มั่นใจในตัวเองก็พอ 💖',
+      'เธอทำได้ดีมากแล้ว วันนี้ขอแค่ผ่านไปอย่างอ่อนโยนกับตัวเองก็พอ 💖',
       'ยิ้มเยอะๆ นะคนเก่ง กำลังใจอยู่ตรงนี้เสมอ 🌷',
       'วันหนึ่งความพยายามทั้งหมด จะกลายเป็นรอยยิ้มที่งดงามของคนไข้ ✨',
     ];
@@ -324,22 +456,6 @@
       msgBox.innerText = m;
       setTimeout(() => { msgBox.style.transition = 'opacity 0.5s'; msgBox.style.opacity = 1; }, 100);
     }
-
-    // --- Music Logic ---
-    function toggleMusic() {
-      const audio = document.getElementById("bgMusic");
-      const icon = document.getElementById("musicIcon");
-      const text = document.getElementById("musicText");
-      const btn = document.getElementById("musicBtn");
-      
-      if (audio.paused) {
-        audio.play().then(() => {
-          icon.innerText = "💿"; icon.classList.add("spin"); text.innerText = "กำลังเล่น.."; btn.style.borderColor = "#ff8da1"; 
-        }).catch(e => alert("หาไฟล์เพลงไม่เจอครับ ตรวจสอบชื่อไฟล์ music.mp3 อีกทีนะ!"));
-      } else {
-        audio.pause(); icon.innerText = "🎵"; icon.classList.remove("spin"); text.innerText = "Play"; btn.style.borderColor = "#ffeef2";
-      }
-    }
       
     // --- Letter Logic ---
     function openLetter() {
@@ -347,54 +463,11 @@
         document.getElementById('hiddenContent').style.display = 'block';
     }
 
-    // --- Write Note Logic (New) ---
-    function saveNote() {
-        const text = document.getElementById('userNote').value;
-        if(text.trim() === "") { alert("พิมพ์อะไรสักหน่อยสิคะ 😊"); return; }
-        
-        // ซ่อนกล่องพิมพ์ แสดงข้อความแทน
-        document.getElementById('userNote').style.display = 'none';
-        document.getElementById('savedNoteArea').style.display = 'block';
-        document.getElementById('savedText').innerText = `"${text}"`;
-        
-        // บันทึกลงเครื่อง
-        localStorage.setItem('numeeNote', text);
-        alert("บันทึกความในใจเรียบร้อยครับ 💖");
-    }
-
-    function sendToLine() {
-        const text = document.getElementById('userNote').value;
-        if(text.trim() === "") { alert("พิมพ์ก่อนส่งนะ 😊"); return; }
-        
-        // สร้าง Link ส่ง Line (เมื่อกดจะเด้งไปแอพ Line ให้เลือกเพื่อนแล้วกดส่ง)
-        const lineUrl = `https://line.me/R/msg/text/?${encodeURIComponent("ถึงแบ... " + text)}`;
-        window.open(lineUrl, '_blank');
-    }
-
-    // ตรวจสอบว่าเคยจดไว้ไหม
-    window.onload = function() {
-        const saved = localStorage.getItem('numeeNote');
-        if(saved) {
-            document.getElementById('userNote').value = saved;
-        }
-    }
-
     // --- Heart Rain Logic ---
     function triggerHeartRain() {
-        document.getElementById('giftTitle').innerText = "ท่านหญิงฟาติมะฮฺ เคยกล่าวไว้ว่า...";
-        document.getElementById('giftText').innerText = "การตกหลุมรักใครสักคน เป็นเรื่องธรรมดา แต่การตกหลุมรักใครหลายๆครั้งกับคนเดิม เป็นเรื่องที่พิเศษมาก";
+        document.getElementById('giftTitle').innerText = "ท่านหญิงฟาตีมะฮเคยกล่าวไว้ว่า:";
+        document.getElementById('giftText').innerText = "ตกหลุมรักใครสักคนเป็นเรื่องธรรมดา แต่ตกหลุมรักหลายๆครั้งกับคนเดิม เป็นเรื่องที่พิเศษมาก ";
         
-        // เล่นเพลงอัตโนมัติถ้ากดของขวัญ
-        const audio = document.getElementById("bgMusic");
-        if (audio.paused) {
-            audio.play().then(() => {
-                document.getElementById("musicIcon").innerText = "💿"; 
-                document.getElementById("musicIcon").classList.add("spin"); 
-                document.getElementById("musicText").innerText = "กำลังเล่น.."; 
-                document.getElementById("musicBtn").style.borderColor = "#ff8da1"; 
-            });
-        }
-
         const symbols = ['💖', '💕', '💗', '🌷', '✨', '🩺', '💐'];
         const duration = 5000;
 
@@ -411,6 +484,10 @@
 
         setTimeout(() => { clearInterval(interval); }, duration);
     }
+
+    // โหลดข้อความเมื่อเปิดเว็บ
+    window.onload = loadNotes;
+
   </script>
 </body>
 </html>
